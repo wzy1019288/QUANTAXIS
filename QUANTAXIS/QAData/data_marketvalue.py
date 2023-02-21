@@ -34,7 +34,7 @@ def QA_data_calc_marketvalue(data, xdxr):
     mv = xdxr.query('category!=6').loc[:,
                                        ['shares_after',
                                         'liquidity_after']].dropna()
-    res = pd.concat([data, mv], axis=1)
+    res = pd.concat([data, mv], axis=1).sort_index()    # update ////////////////////////////////
     res = res.assign(
         shares=res.shares_after.groupby(level=1).fillna(method='ffill'),
         lshares=res.liquidity_after.groupby(level=1).fillna(method='ffill')

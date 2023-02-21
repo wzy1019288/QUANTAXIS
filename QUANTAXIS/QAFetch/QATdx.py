@@ -575,6 +575,7 @@ def QA_fetch_get_bond_realtime(code=['010107'], ip=None, port=None):
                         bid1=data.bid1/10, bid2=data.bid2/10, bid3=data.bid3/10, bid4=data.bid4/10, bid5=data.bid5/10)
 
         return data.set_index(['datetime', 'code'])
+
 @retry(stop_max_attempt_number=3, wait_random_min=50, wait_random_max=100)
 def QA_fetch_depth_market_data(code=['000001', '000002'], ip=None, port=None):
     ip, port = get_mainmarket_ip(ip, port)
@@ -702,10 +703,22 @@ def QA_fetch_get_stock_list(type_='stock', ip=None, port=None):
     #         return res.assign(code=res.code.apply(lambda x: QA_util_code_tostr(x)))
     api = TdxHq_API()
     with api.connect(ip, port):
+        # data = pd.concat(
+        #     [pd.concat([api.to_df(api.get_security_list(j, i * 1000)).assign(
+        #         sse='sz' if j == 0 else 'sh') for i in
+        #         range(int(api.get_security_count(j) / 1000) + 1)], axis=0, sort=False) for
+        #         j
+        #         in range(2)], axis=0, sort=False)
+        # # solve:
+        # # api.get_security_count(1)   # 20750只证券
+        # # api.to_df(api.get_security_list(1, api.get_security_count(1)-10))   # shape=10, 返回最后10只证券
+        # # api.get_security_count(0)   # 15965只证券
+        # # api.to_df(api.get_security_list(0, api.get_security_count(0)-1004)) # shape=1000, 跟1不同, 只能返回1000只
+        
         data = pd.concat(
-            [pd.concat([api.to_df(api.get_security_list(j, i * 1000)).assign(
+            [pd.concat([api.to_df(api.get_security_list(j, int(i * 1000))).assign(
                 sse='sz' if j == 0 else 'sh') for i in
-                range(int(api.get_security_count(j) / 1000) + 1)], axis=0, sort=False) for
+                list(range(int(api.get_security_count(j) / 1000) + 1)) + [(api.get_security_count(j)-1004) / 1000]], axis=0, sort=False) for
                 j
                 in range(2)], axis=0, sort=False)
         # data.code = data.code.apply(int)
@@ -2758,12 +2771,12 @@ if __name__ == '__main__':
     #rows = QA_fetch_get_commodity_option_CU_contract_time_to_market()
     #print(rows)
 
-    #print(QA_fetch_get_stock_day('000001', '2017-07-03', '2017-07-10'))
-    #print(QA_fetch_get_stock_day('000001', '2013-07-01', '2013-07-09'))
+    # print(QA_fetch_get_stock_day('000001', '2017-07-03', '2023-01-29'))
+    # print(QA_fetch_get_stock_day('000001', '2013-07-01', '2013-07-09'))
     # print(QA_fetch_get_stock_realtime('000001'))
     # print(QA_fetch_get_index_day('000001', '2017-01-01', '2017-07-01'))
-    # print(QA_fetch_get_stock_transaction('000001', '2017-07-03', '2017-07-10'))
+    print(QA_fetch_get_stock_transaction('000001', '2017-07-03', '2017-07-10'))
 
     # print(QA_fetch_get_stock_info('600116'))
-    rows = QA_fetch_get_hkstock_list()
-    print(rows)
+    # rows = QA_fetch_get_hkstock_list()
+    # print(rows)

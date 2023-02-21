@@ -302,7 +302,8 @@ class QA_DataStruct_Stock_min(_quotation_base):
         super().__init__(DataFrame, dtype, if_fq)
 
         try:
-            if 'preclose' in DataFrame.columns:
+            # solve: vol, volume
+            if 'preclose' in DataFrame.columns and 'volume' in DataFrame.columns:
                 self.data = DataFrame.loc[:,
                                           [
                                               'open',
@@ -314,7 +315,19 @@ class QA_DataStruct_Stock_min(_quotation_base):
                                               'preclose',
                                               'type'
                                           ]]
-            else:
+            elif 'preclose' in DataFrame.columns and 'vol' in DataFrame.columns:
+                self.data = DataFrame.loc[:,
+                                          [
+                                              'open',
+                                              'high',
+                                              'low',
+                                              'close',
+                                              'vol',
+                                              'amount',
+                                              'preclose',
+                                              'type'
+                                          ]]
+            elif 'preclose' not in DataFrame.columns and 'volume' in DataFrame.columns:
                 self.data = DataFrame.loc[:,
                                           [
                                               'open',
@@ -322,6 +335,17 @@ class QA_DataStruct_Stock_min(_quotation_base):
                                               'low',
                                               'close',
                                               'volume',
+                                              'amount',
+                                              'type'
+                                          ]]
+            else:
+                self.data = DataFrame.loc[:,
+                                          [
+                                              'open',
+                                              'high',
+                                              'low',
+                                              'close',
+                                              'vol',
                                               'amount',
                                               'type'
                                           ]]

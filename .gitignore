@@ -196,3 +196,6 @@ celerybeat*
 .synctex(busy)
 *.fdb_latexmk
 *.fls
+
+
+.history

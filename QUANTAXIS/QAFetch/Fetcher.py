@@ -438,24 +438,49 @@ class AsyncFetcher():
 
 
 if __name__ == '__main__':
-    # import asyncio
+    import asyncio
     # print(QA_quotation_adv('000001', '2020-01-01', '2020-02-03', frequence=FREQUENCE.DAY,
+    #                        market=MARKET_TYPE.STOCK_CN, source=DATASOURCE.MONGO, output=OUTPUT_FORMAT.DATAFRAME))
+    # print(QA_quotation_adv('000001', '2023-01-01', '2023-02-03 15:00:00', frequence=FREQUENCE.ONE_MIN,
     #                        market=MARKET_TYPE.STOCK_CN, source=DATASOURCE.AUTO, output=OUTPUT_FORMAT.DATAFRAME))
-    # print(QA_quotation_adv('000001', '2020-01-22', '2020-02-03 15:00:00', frequence=FREQUENCE.ONE_MIN,
+    # print(QA_quotation_adv('000001', '2022-12-01', '2023-02-03', frequence=FREQUENCE.WEEK,
     #                        market=MARKET_TYPE.STOCK_CN, source=DATASOURCE.AUTO, output=OUTPUT_FORMAT.DATAFRAME))
-    print(QA_quotation_adv('000001', '2019-12-01', '2020-02-03', frequence=FREQUENCE.WEEK,
-                           market=MARKET_TYPE.STOCK_CN, source=DATASOURCE.AUTO, output=OUTPUT_FORMAT.DATAFRAME))
+    
+    # print(QATdx.QA_fetch_get_stock_list())
+
     # Fetcher = AsyncFetcher()
     # loop = asyncio.get_event_loop()
     # res = loop.run_until_complete(asyncio.gather(
     #     # 这几个是异步的
-    #     Fetcher.get_quotation('000001', '2018-07-01', '2018-07-15',
-    #                           FREQUENCE.DAY, MARKET_TYPE.STOCK_CN, DATASOURCE.MONGO),
-    #     Fetcher.get_quotation('000001', '2018-07-12', '2018-07-15',
-    #                           FREQUENCE.FIFTEEN_MIN, MARKET_TYPE.STOCK_CN, DATASOURCE.MONGO),
+    #     # Fetcher.get_quotation('000001', '2018-07-01', '2018-07-15',
+    #     #                       FREQUENCE.DAY, MARKET_TYPE.STOCK_CN, DATASOURCE.MONGO),
+    #     # Fetcher.get_quotation('000001', '2018-07-12', '2018-07-15',
+    #     #                       FREQUENCE.FIFTEEN_MIN, MARKET_TYPE.STOCK_CN, DATASOURCE.MONGO),
     #     # 这个是同步的
-    #     Fetcher.get_quotation('000001', '2018-07-12', '2018-07-15',
+    #     Fetcher.get_quotation('000001', '2022-07-12', '2022-07-15',
     #                           FREQUENCE.FIFTEEN_MIN, MARKET_TYPE.STOCK_CN, DATASOURCE.TDX),
+    #     Fetcher.get_quotation('000001', '2022-07-12', '2023-01-15',
+    #                           FREQUENCE.DAY, MARKET_TYPE.STOCK_CN, DATASOURCE.TDX),
+    # ))
+
+    # data = [Fetcher.get_quotation(code, '2022-07-12', '2023-01-31',
+    #                 FREQUENCE.DAY, MARKET_TYPE.STOCK_CN, DATASOURCE.MONGO)
+    #         for code in QATdx.QA_fetch_get_stock_list().code.unique()]
+    # res = loop.run_until_complete(asyncio.gather(
+    #     Fetcher.get_quotation('000001', '2022-07-12', '2023-01-31',
+    #                 FREQUENCE.DAY, MARKET_TYPE.STOCK_CN, DATASOURCE.MONGO),
+    #     Fetcher.get_quotation('601012', '2022-07-12', '2023-01-31',
+    #                 FREQUENCE.DAY, MARKET_TYPE.STOCK_CN, DATASOURCE.MONGO),
+    #     Fetcher.get_quotation('300750', '2022-07-12', '2023-01-31',
+    #                 FREQUENCE.DAY, MARKET_TYPE.STOCK_CN, DATASOURCE.MONGO),
     # ))
 
     # print(res)
+    # print(len(res))
+
+    # Fetcher.get_quotation('601012', '2022-07-12', '2023-01-31',
+    #                 FREQUENCE.DAY, MARKET_TYPE.STOCK_CN, DATASOURCE.MONGO)
+    # res2 = QA_quotation_adv('601012', '2022-07-12', '2023-01-31',
+    #                 FREQUENCE.DAY, MARKET_TYPE.STOCK_CN, DATASOURCE.AUTO, output=OUTPUT_FORMAT.DATAFRAME)
+    # print(res2)
+

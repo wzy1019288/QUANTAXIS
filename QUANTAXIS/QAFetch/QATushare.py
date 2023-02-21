@@ -249,7 +249,7 @@ def QA_fetch_get_stock_block():
 
 # test
 
-# print(get_stock_day("000001",'2001-01-01','2010-01-01'))
+# QA_fetch_get_stock_day("000001",'2001-01-01','2010-01-01')
 # print(get_stock_tick("000001.SZ","2017-02-21"))
 if __name__ == '__main__':
     df = QA_fetch_get_stock_list()

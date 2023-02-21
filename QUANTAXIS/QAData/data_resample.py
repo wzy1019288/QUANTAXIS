@@ -942,6 +942,7 @@ def QA_data_day_resample(day_data, type_='w'):
         'date': 'last'
     }
 
+    day_data.index = pd.to_datetime(day_data.index) # solve: TypeError: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
     data = day_data.resample(type_, closed='right').apply(CONVERSION).dropna()
     return data.assign(date=pd.to_datetime(data.date, utc=False)
                       ).set_index(['date',
@@ -988,6 +989,7 @@ def QA_data_futureday_resample(day_data, type_='w'):
         'date': 'last'
     }
 
+    day_data.index = pd.to_datetime(day_data.index) # solve: TypeError: Only valid with DatetimeIndex, TimedeltaIndex or PeriodIndex, but got an instance of 'Index'
     data = day_data.resample(type_, closed='right').apply(CONVERSION).dropna()
     return data.assign(date=pd.to_datetime(data.date, utc=False)
                       ).set_index(['date',
